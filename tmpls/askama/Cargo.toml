@@ -1,0 +1,11 @@
+[package]
+name = "tmpl-askama"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license = "Apache-2.0"
+
+[dependencies]
+tmpls = { version = "*", path = ".." }
+
+askama = { version = "0.13.0", git = "https://github.com/djc/askama", branch = "main" }
