@@ -1,0 +1,13 @@
+@use tmpls::BigTable;
+
+@(input: &BigTable)
+
+<table>
+    @for row in &input.table {
+    <tr>
+        @for col in row {
+        <td>@col</td>
+        }
+    </tr>
+    }
+</table>

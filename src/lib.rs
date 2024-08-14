@@ -32,6 +32,8 @@ macro_rules! for_each {
         for_each!(minijinja, group, $input:$Input, $func);
         #[cfg(feature = "rinja")]
         for_each!(rinja, group, $input:$Input, $func);
+        #[cfg(feature = "ructe")]
+        for_each!(ructe, group, $input:$Input, $func);
         #[cfg(feature = "sailfish")]
         for_each!(sailfish, group, $input:$Input, $func);
         #[cfg(feature = "tera")]
@@ -93,6 +95,7 @@ fn run<B: Benchmark, I>(
 ) {
     let mut output = B::Output::default();
     func(this, &mut output, input).unwrap();
+    // dbg!(std::str::from_utf8(output.as_bytes()).unwrap());
     let expected_hash = collect_output(&mut output);
 
     b.iter_custom(|iters| {
