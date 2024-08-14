@@ -28,8 +28,8 @@ compiled = ["askama", "horrorshow", "markup", "maud", "rinja", "ructe", "sailfis
 interpreted = ["handlebars", "minijinja", "tera", "tinytemplate"]
 
 askama = ["dep:askama", "_contains_compiled"]
-handlebars = ["dep:handlebars", "_contains_compiled"]
-horrorshow = ["dep:horrorshow", "_contains_interpreted"]
+handlebars = ["dep:handlebars", "_contains_interpreted"]
+horrorshow = ["dep:horrorshow", "_contains_compiled"]
 markup = ["dep:markup", "_contains_compiled"]
 maud = ["dep:maud", "_contains_compiled"]
 minijinja = ["dep:minijinja", "_contains_interpreted"]

@@ -20,36 +20,52 @@ macro_rules! for_each {
     }};
 
     ($c:ident, $input:ident : $Input:ident, $func:ident) => {{
-        let mut group = $c.benchmark_group(stringify!($func));
+        #[cfg(feature = "_contains_compiled")]
+        let _ = {
+            #[cfg(not(feature = "_contains_interpreted"))]
+            const NAME: &str = stringify!($func);
+            #[cfg(feature = "_contains_interpreted")]
+            const NAME: &str = concat!(stringify!($func), " (compiled)");
 
-        #[cfg(all(feature = "_contains_compiled", feature = "_contains_interpreted"))]
-        group.plot_config(criterion::PlotConfiguration::default()
-            .summary_scale(criterion::AxisScale::Logarithmic));
+            let mut group = $c.benchmark_group(NAME);
 
-        #[cfg(feature = "askama")]
-        for_each!(askama, group, $input:$Input, $func);
-        #[cfg(feature = "handlebars")]
-        for_each!(handlebars, group, $input:$Input, $func);
-        #[cfg(feature = "horrorshow")]
-        for_each!(horrorshow, group, $input:$Input, $func);
-        #[cfg(feature = "markup")]
-        for_each!(markup, group, $input:$Input, $func);
-        #[cfg(feature = "maud")]
-        for_each!(maud, group, $input:$Input, $func);
-        #[cfg(feature = "minijinja")]
-        for_each!(minijinja, group, $input:$Input, $func);
-        #[cfg(feature = "rinja")]
-        for_each!(rinja, group, $input:$Input, $func);
-        #[cfg(feature = "ructe")]
-        for_each!(ructe, group, $input:$Input, $func);
-        #[cfg(feature = "sailfish")]
-        for_each!(sailfish, group, $input:$Input, $func);
-        #[cfg(feature = "tera")]
-        for_each!(tera, group, $input:$Input, $func);
-        #[cfg(feature = "tinytemplate")]
-        for_each!(tinytemplate, group, $input:$Input, $func);
+            #[cfg(feature = "askama")]
+            for_each!(askama, group, $input:$Input, $func);
+            #[cfg(feature = "horrorshow")]
+            for_each!(horrorshow, group, $input:$Input, $func);
+            #[cfg(feature = "markup")]
+            for_each!(markup, group, $input:$Input, $func);
+            #[cfg(feature = "maud")]
+            for_each!(maud, group, $input:$Input, $func);
+            #[cfg(feature = "rinja")]
+            for_each!(rinja, group, $input:$Input, $func);
+            #[cfg(feature = "ructe")]
+            for_each!(ructe, group, $input:$Input, $func);
+            #[cfg(feature = "sailfish")]
+            for_each!(sailfish, group, $input:$Input, $func);
 
-        group.finish();
+            group.finish();
+        };
+        #[cfg(feature = "_contains_interpreted")]
+        let _ = {
+            #[cfg(not(feature = "_contains_compiled"))]
+            const NAME: &str = stringify!($func);
+            #[cfg(feature = "_contains_compiled")]
+            const NAME: &str = concat!(stringify!($func), " (interpreted)");
+
+            let mut group = $c.benchmark_group(NAME);
+
+            #[cfg(feature = "handlebars")]
+            for_each!(handlebars, group, $input:$Input, $func);
+            #[cfg(feature = "minijinja")]
+            for_each!(minijinja, group, $input:$Input, $func);
+            #[cfg(feature = "tera")]
+            for_each!(tera, group, $input:$Input, $func);
+            #[cfg(feature = "tinytemplate")]
+            for_each!(tinytemplate, group, $input:$Input, $func);
+
+            group.finish();
+        };
     }};
 }
 
