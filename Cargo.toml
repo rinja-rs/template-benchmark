@@ -7,6 +7,7 @@ members = [
     "tmpls/markup",
     "tmpls/minijinja",
     "tmpls/rinja",
+    "tmpls/sailfish",
     "tmpls/tera",
     "tmpls/tinytemplate",
 ]
@@ -20,12 +21,13 @@ publish = false
 license = "Apache-2.0"
 
 [features]
-default = ["askama", "horrorshow", "markup", "minijinja", "rinja", "tera", "tinytemplate"]
+default = ["askama", "horrorshow", "markup", "minijinja", "rinja", "sailfish", "tera", "tinytemplate"]
 askama = ["dep:askama"]
 horrorshow = ["dep:horrorshow"]
 markup = ["dep:markup"]
 minijinja = ["dep:minijinja"]
 rinja = ["dep:rinja"]
+sailfish = ["dep:sailfish"]
 tera = ["dep:tera"]
 tinytemplate = ["dep:tinytemplate"]
 
@@ -37,6 +39,7 @@ horrorshow = { version = "*", optional = true, path = "tmpls/horrorshow", packag
 markup = { version = "*", optional = true, path = "tmpls/markup", package = "tmpl-markup" }
 minijinja = { version = "*", optional = true, path = "tmpls/minijinja", package = "tmpl-minijinja" }
 rinja = { version = "*", optional = true, path = "tmpls/rinja", package = "tmpl-rinja" }
+sailfish = { version = "*", optional = true, path = "tmpls/sailfish", package = "tmpl-sailfish" }
 tera = { version = "*", optional = true, path = "tmpls/tera", package = "tmpl-tera" }
 tinytemplate = { version = "*", optional = true, path = "tmpls/tinytemplate", package = "tmpl-tinytemplate" }
 

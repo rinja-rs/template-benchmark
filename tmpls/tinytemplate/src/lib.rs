@@ -26,12 +26,12 @@ impl tmpls::Benchmark for Benchmark {
         output: &mut Self::Output,
         input: &BigTable,
     ) -> Result<(), Self::Error> {
-        output.push_str(&self.tt.render("big-table", input)?);
+        *output = self.tt.render("big-table", input)?;
         Ok(())
     }
 
     fn teams(&mut self, output: &mut Self::Output, input: &Teams) -> Result<(), Self::Error> {
-        output.push_str(&self.tt.render("teams", input)?);
+        *output = self.tt.render("teams", input)?;
         Ok(())
     }
 }

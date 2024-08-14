@@ -32,6 +32,8 @@ macro_rules! for_each {
         for_each!(minijinja, group, $input:$Input, $func);
         #[cfg(feature = "rinja")]
         for_each!(rinja, group, $input:$Input, $func);
+        #[cfg(feature = "sailfish")]
+        for_each!(sailfish, group, $input:$Input, $func);
         #[cfg(feature = "tera")]
         for_each!(tera, group, $input:$Input, $func);
         #[cfg(feature = "tinytemplate")]
