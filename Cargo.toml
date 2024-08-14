@@ -22,8 +22,9 @@ publish = false
 license = "Apache-2.0"
 
 [features]
-default = ["askama", "horrorshow", "markup", "minijinja", "rinja", "ructe", "sailfish", "tera", "tinytemplate"]
+default = ["askama", "handlebars", "horrorshow", "markup", "minijinja", "rinja", "ructe", "sailfish", "tera", "tinytemplate"]
 askama = ["dep:askama"]
+handlebars = ["dep:handlebars"]
 horrorshow = ["dep:horrorshow"]
 markup = ["dep:markup"]
 minijinja = ["dep:minijinja"]
@@ -37,6 +38,7 @@ tinytemplate = ["dep:tinytemplate"]
 tmpls = { version = "*", path = "tmpls" }
 
 askama = { version = "*", optional = true, path = "tmpls/askama", package = "tmpl-askama" }
+handlebars = { version = "*", optional = true, path = "tmpls/handlebars", package = "tmpl-handlebars" }
 horrorshow = { version = "*", optional = true, path = "tmpls/horrorshow", package = "tmpl-horrorshow" }
 markup = { version = "*", optional = true, path = "tmpls/markup", package = "tmpl-markup" }
 minijinja = { version = "*", optional = true, path = "tmpls/minijinja", package = "tmpl-minijinja" }

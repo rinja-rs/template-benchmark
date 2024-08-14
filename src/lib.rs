@@ -24,6 +24,8 @@ macro_rules! for_each {
 
         #[cfg(feature = "askama")]
         for_each!(askama, group, $input:$Input, $func);
+        #[cfg(feature = "handlebars")]
+        for_each!(handlebars, group, $input:$Input, $func);
         #[cfg(feature = "horrorshow")]
         for_each!(horrorshow, group, $input:$Input, $func);
         #[cfg(feature = "markup")]
