@@ -1,9 +1,8 @@
 use std::hint::black_box;
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
 use ahash::RandomState;
 use criterion::{Bencher, Criterion};
-use quanta::Instant;
 use tmpls::{Benchmark, BigTable, Output, Team, Teams};
 
 macro_rules! for_each {
@@ -91,20 +90,14 @@ fn run<B: Benchmark, I>(
     func: impl Fn(&mut B, &mut B::Output, &I) -> Result<(), B::Error>,
 ) {
     let mut output = B::Output::default();
-    for _ in 0..BATCH_SIZE {
-        func(this, &mut output, input).unwrap();
-    }
+    func(this, &mut output, input).unwrap();
     let expected_hash = collect_output(&mut output);
 
     b.iter_custom(|iters| {
         let mut total = 0;
-        for _ in 0..iters.div_ceil(BATCH_SIZE as u64) {
+        for _ in 0..iters {
             let start = Instant::now();
-            for _ in 0..BATCH_SIZE {
-                let output = black_box(&mut output);
-                let input = black_box(input);
-                func(this, output, input).unwrap();
-            }
+            black_box(func(this, black_box(&mut output), black_box(input))).unwrap();
             total += start.elapsed().as_nanos() as u64;
 
             let hash = collect_output(&mut output);
@@ -129,5 +122,3 @@ fn collect_output(output: &mut impl Output) -> u64 {
     output.clear();
     hash
 }
-
-const BATCH_SIZE: usize = 100;
