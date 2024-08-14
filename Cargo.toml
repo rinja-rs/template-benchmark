@@ -22,18 +22,25 @@ publish = false
 license = "Apache-2.0"
 
 [features]
-default = ["askama", "handlebars", "horrorshow", "markup", "maud", "minijinja", "rinja", "ructe", "sailfish", "tera", "tinytemplate"]
-askama = ["dep:askama"]
-handlebars = ["dep:handlebars"]
-horrorshow = ["dep:horrorshow"]
-markup = ["dep:markup"]
-maud = ["dep:maud"]
-minijinja = ["dep:minijinja"]
-rinja = ["dep:rinja"]
-ructe = ["dep:ructe"]
-sailfish = ["dep:sailfish"]
-tera = ["dep:tera"]
-tinytemplate = ["dep:tinytemplate"]
+default = ["compiled", "interpreted"]
+
+compiled = ["askama", "horrorshow", "markup", "maud", "rinja", "ructe", "sailfish"]
+interpreted = ["handlebars", "minijinja", "tera", "tinytemplate"]
+
+askama = ["dep:askama", "_contains_compiled"]
+handlebars = ["dep:handlebars", "_contains_compiled"]
+horrorshow = ["dep:horrorshow", "_contains_interpreted"]
+markup = ["dep:markup", "_contains_compiled"]
+maud = ["dep:maud", "_contains_compiled"]
+minijinja = ["dep:minijinja", "_contains_interpreted"]
+rinja = ["dep:rinja", "_contains_compiled"]
+ructe = ["dep:ructe", "_contains_compiled"]
+sailfish = ["dep:sailfish", "_contains_compiled"]
+tera = ["dep:tera", "_contains_interpreted"]
+tinytemplate = ["dep:tinytemplate", "_contains_interpreted"]
+
+_contains_compiled = []
+_contains_interpreted = []
 
 [dependencies]
 tmpls = { version = "*", path = "tmpls" }

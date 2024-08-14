@@ -22,6 +22,10 @@ macro_rules! for_each {
     ($c:ident, $input:ident : $Input:ident, $func:ident) => {{
         let mut group = $c.benchmark_group(stringify!($func));
 
+        #[cfg(all(feature = "_contains_compiled", feature = "_contains_interpreted"))]
+        group.plot_config(criterion::PlotConfiguration::default()
+            .summary_scale(criterion::AxisScale::Logarithmic));
+
         #[cfg(feature = "askama")]
         for_each!(askama, group, $input:$Input, $func);
         #[cfg(feature = "handlebars")]
