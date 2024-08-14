@@ -9,7 +9,7 @@ macro_rules! for_each {
     ($mod:ident, $c:ident, $input:ident : $Input:ident, $func:ident) => {{
         let mut this = $mod::Benchmark::default();
         $c.bench_function(
-            stringify!($mod),
+            env!(concat!("VERSION_", stringify!($mod))),
             |b| run(
                 b,
                 &mut this,
