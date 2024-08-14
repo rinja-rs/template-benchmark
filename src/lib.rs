@@ -30,6 +30,8 @@ macro_rules! for_each {
         for_each!(horrorshow, group, $input:$Input, $func);
         #[cfg(feature = "markup")]
         for_each!(markup, group, $input:$Input, $func);
+        #[cfg(feature = "maud")]
+        for_each!(maud, group, $input:$Input, $func);
         #[cfg(feature = "minijinja")]
         for_each!(minijinja, group, $input:$Input, $func);
         #[cfg(feature = "rinja")]

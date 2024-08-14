@@ -22,11 +22,12 @@ publish = false
 license = "Apache-2.0"
 
 [features]
-default = ["askama", "handlebars", "horrorshow", "markup", "minijinja", "rinja", "ructe", "sailfish", "tera", "tinytemplate"]
+default = ["askama", "handlebars", "horrorshow", "markup", "maud", "minijinja", "rinja", "ructe", "sailfish", "tera", "tinytemplate"]
 askama = ["dep:askama"]
 handlebars = ["dep:handlebars"]
 horrorshow = ["dep:horrorshow"]
 markup = ["dep:markup"]
+maud = ["dep:maud"]
 minijinja = ["dep:minijinja"]
 rinja = ["dep:rinja"]
 ructe = ["dep:ructe"]
@@ -41,6 +42,7 @@ askama = { version = "*", optional = true, path = "tmpls/askama", package = "tmp
 handlebars = { version = "*", optional = true, path = "tmpls/handlebars", package = "tmpl-handlebars" }
 horrorshow = { version = "*", optional = true, path = "tmpls/horrorshow", package = "tmpl-horrorshow" }
 markup = { version = "*", optional = true, path = "tmpls/markup", package = "tmpl-markup" }
+maud = { version = "*", optional = true, path = "tmpls/maud", package = "tmpl-maud" }
 minijinja = { version = "*", optional = true, path = "tmpls/minijinja", package = "tmpl-minijinja" }
 rinja = { version = "*", optional = true, path = "tmpls/rinja", package = "tmpl-rinja" }
 ructe = { version = "*", optional = true, path = "tmpls/ructe", package = "tmpl-ructe" }
