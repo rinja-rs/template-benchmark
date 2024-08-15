@@ -126,7 +126,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: sudo apt install -y gnuplot
+      - name: Install dependencies
+        run: sudo apt install -y gnuplot inkscape scour wkhtmltopdf xvfb
 
       - name: Install rust
         uses: dtolnay/rust-toolchain@master
@@ -135,13 +136,17 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
 
-      - run: rm -rf target/criterion
+      - name: Remove any stale results
+        run: rm -rf target/criterion
 
       - name: Run benchmarks
         run: cargo bench --bench template-benchmark
 
       - name: Fixup paths
         run: sed -e 's,href="../,href=",' < target/criterion/report/index.html > target/criterion/index.html
+
+      - name: Generate table
+        run: ./generate-table.py
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
