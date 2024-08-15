@@ -13,8 +13,8 @@ Only you can decide which characteristics of a template engine
 Currently, we compare eleven different template engines.
 All of them are well maintained, mature and perform HTML escaping automatically.
 
-| Crate          | Docs                                            | Repo                | Code         | Recent<br>Downloads                  | Github<br>Stars                              | Contrib-<br>utors                            | Recent<br>Commits                          |
-| -------------- | ----------------------------------------------- | ------------------- | -------------| ------------------------------------ | -------------------------------------------- | -------------------------------------------- | ------------------------------------------ |
+| Crate          | Docs                                            | Repo                               | Code         | Recent<br>Downloads                  | Github<br>Stars                              | Contrib-<br>utors                            | Recent<br>Commits                          |
+| -------------- | ----------------------------------------------- | ---------------------------------- | -------------| ------------------------------------ | -------------------------------------------- | -------------------------------------------- | ------------------------------------------ |
 | [askama]       | [![][docs-img-askama]][docs-askama]             | [![][img-repo]][repo-askama]       | pre-compiled | [![][dl-askama]][askama]             | [![][stars-askama]][repo-askama]             | [![][contr-askama]][repo-askama]             | [![][act-askama]][repo-askama]             |
 | [handlebars]   | [![][docs-img-handlebars]][docs-handlebars]     | [![][img-repo]][repo-handlebars]   | interpreted  | [![][dl-handlebars]][handlebars]     | [![][stars-handlebars]][repo-handlebars]     | [![][contr-handlebars]][repo-handlebars]     | [![][act-handlebars]][repo-handlebars]     |
 | [horrorshow]   | [![][docs-img-horrorshow]][docs-horrorshow]     | [![][img-repo]][repo-horrorshow]   | pre-compiled | [![][dl-horrorshow]][horrorshow]     | [![][stars-horrorshow]][repo-horrorshow]     | [![][contr-horrorshow]][repo-horrorshow]     | [![][act-horrorshow]][repo-horrorshow]     |
@@ -34,9 +34,9 @@ Please see also [*Rust web framework comparison*].
 The benchmarking was done on Github's action runners, on an AMD-64 Linux system.
 The absolute performance can vary, but the relative performance of crate *X* to *Y* should be stable.
 
-[![](https://kijewski.github.io/template-benchmark/results.svg)](https://kijewski.github.io/template-benchmark/)
+[![](https://rinja-rs.github.io/template-benchmark/results.svg)](https://rinja-rs.github.io/template-benchmark/)
 
-More information can be found in: <https://kijewski.github.io/template-benchmark/>.
+More information can be found in: <https://rinja-rs.github.io/template-benchmark/>.
 
 The "big table" benchmark generates a 100×100 cell HTML table.
 The "teams" benchmark contains a list of four sport teams and their scores.
