@@ -62,6 +62,8 @@ tinytemplate = { version = "*", optional = true, path = "tmpls/tinytemplate", pa
 
 ahash = { version = "0.8.11", features = ["no-rng"] }
 criterion = { version = "0.5.1", features = ["html_reports"] }
+pretty-error-debug = "0.3.0"
+thiserror = "1.0.63"
 
 [build-dependencies]
 pretty-error-debug = "0.3.0"
@@ -71,3 +73,6 @@ thiserror = "1.0.63"
 [[bench]]
 name = "template-benchmark"
 harness = false
+
+[lints.clippy]
+type_complexity = "allow"

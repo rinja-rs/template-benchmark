@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 pub trait Benchmark: Default {
     type Output: Output;
-    type Error: std::error::Error;
+    type Error: std::error::Error + Send + 'static;
 
     fn big_table(&mut self, output: &mut Self::Output, input: &BigTable)
     -> Result<(), Self::Error>;
