@@ -3,7 +3,7 @@ use std::time::{Duration, Instant};
 
 use ahash::RandomState;
 use criterion::{Bencher, Criterion};
-use tmpls::{Benchmark, BigTable, Output, Team, Teams};
+use tmpls::{Benchmark, BigTable, Output, Teams};
 
 macro_rules! for_each {
     ($mod:ident, $c:ident, $input:ident : $Input:ident, $func:ident) => {{
@@ -69,48 +69,19 @@ macro_rules! for_each {
             group.finish();
         };
     }};
+
+    ($c:ident, $Input:ident, $func:ident) => {{
+        let input = <$Input>::default();
+        for_each!($c, input:$Input, $func);
+    }};
 }
 
 pub fn big_table(c: &mut Criterion) {
-    const SIZE: usize = 100;
-
-    let mut table = Vec::with_capacity(SIZE);
-    for _ in 0..SIZE {
-        let mut inner = Vec::with_capacity(SIZE);
-        for i in 0..SIZE {
-            inner.push(i);
-        }
-        table.push(inner);
-    }
-    let input = BigTable { table };
-
-    for_each!(c, input:BigTable, big_table);
+    for_each!(c, BigTable, big_table);
 }
 
 pub fn teams(c: &mut Criterion) {
-    let input = Teams {
-        year: 2015,
-        teams: vec![
-            Team {
-                name: "Jiangsu".into(),
-                score: 43,
-            },
-            Team {
-                name: "Beijing".into(),
-                score: 27,
-            },
-            Team {
-                name: "Guangzhou".into(),
-                score: 22,
-            },
-            Team {
-                name: "Shandong".into(),
-                score: 12,
-            },
-        ],
-    };
-
-    for_each!(c, input:Teams, teams);
+    for_each!(c, Teams, teams);
 }
 
 fn run<B: Benchmark, I>(
