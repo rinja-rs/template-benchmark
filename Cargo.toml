@@ -7,6 +7,7 @@ members = [
     "tmpls/markup",
     "tmpls/minijinja",
     "tmpls/rinja",
+    "tmpls/rinja_git",
     "tmpls/ructe",
     "tmpls/sailfish",
     "tmpls/tera",
@@ -24,7 +25,7 @@ license = "Apache-2.0"
 [features]
 default = ["compiled", "interpreted"]
 
-compiled = ["askama", "horrorshow", "markup", "maud", "rinja", "ructe", "sailfish"]
+compiled = ["askama", "horrorshow", "markup", "maud", "rinja", "rinja_git", "ructe", "sailfish"]
 interpreted = ["handlebars", "minijinja", "tera", "tinytemplate"]
 
 askama = ["dep:askama", "_contains_compiled"]
@@ -34,6 +35,7 @@ markup = ["dep:markup", "_contains_compiled"]
 maud = ["dep:maud", "_contains_compiled"]
 minijinja = ["dep:minijinja", "_contains_interpreted"]
 rinja = ["dep:rinja", "_contains_compiled"]
+rinja_git = ["dep:rinja_git", "_contains_compiled"]
 ructe = ["dep:ructe", "_contains_compiled"]
 sailfish = ["dep:sailfish", "_contains_compiled"]
 tera = ["dep:tera", "_contains_interpreted"]
@@ -52,6 +54,7 @@ markup = { version = "*", optional = true, path = "tmpls/markup", package = "tmp
 maud = { version = "*", optional = true, path = "tmpls/maud", package = "tmpl-maud" }
 minijinja = { version = "*", optional = true, path = "tmpls/minijinja", package = "tmpl-minijinja" }
 rinja = { version = "*", optional = true, path = "tmpls/rinja", package = "tmpl-rinja" }
+rinja_git = { version = "*", optional = true, path = "tmpls/rinja_git", package = "tmpl-rinja_git" }
 ructe = { version = "*", optional = true, path = "tmpls/ructe", package = "tmpl-ructe" }
 sailfish = { version = "*", optional = true, path = "tmpls/sailfish", package = "tmpl-sailfish" }
 tera = { version = "*", optional = true, path = "tmpls/tera", package = "tmpl-tera" }
@@ -62,8 +65,7 @@ criterion = { version = "0.5.1", features = ["html_reports"] }
 
 [build-dependencies]
 pretty-error-debug = "0.3.0"
-serde = { version = "1.0.207", features = ["derive"] }
-serde_json = "1.0.124"
+self_cell = "1.0.4"
 thiserror = "1.0.63"
 
 [[bench]]

@@ -1,16 +1,64 @@
-use std::borrow::Cow;
-use std::collections::HashMap;
-use std::ffi::OsString;
+use std::ffi::{OsStr, OsString};
 use std::process::{Command, Stdio};
-
-use serde::Deserialize;
-use serde_json::from_slice;
 
 fn main() -> Result<(), Error> {
     println!("cargo:rerun-if-changed=Cargo.lock");
-    let output = Command::new(var_os("CARGO")?)
-        .args(["metadata", "--locked", "--format-version=1"])
-        .current_dir(var_os("CARGO_MANIFEST_DIR")?)
+
+    let cargo = var_os("CARGO")?;
+    let root = var_os("CARGO_MANIFEST_DIR")?;
+    for &(benchmark_name, _) in &cargo_tree(&cargo, &root, "template-benchmark")? {
+        let Some(engine_name) = benchmark_name.strip_prefix("tmpl-") else {
+            continue;
+        };
+        let bare_engine_name = engine_name.strip_suffix("_git").unwrap_or(engine_name);
+
+        for &(name, info) in &cargo_tree(&cargo, &root, benchmark_name)? {
+            if name != bare_engine_name {
+                continue;
+            }
+            if let Some((version, hash)) = info
+                .split_once(' ')
+                .and_then(|(v, s)| Some((v, s.rsplit_once('#')?)))
+                .and_then(|(v, (_, s))| Some((v, s.strip_suffix(')')?)))
+            {
+                println!(
+                    r#"cargo::rustc-env=VERSION_{p}={n} {v} (git-{h})"#,
+                    p = engine_name,
+                    n = name,
+                    v = version,
+                    h = hash,
+                )
+            } else {
+                println!(
+                    r#"cargo::rustc-env=VERSION_{p}={n} {v}"#,
+                    p = engine_name,
+                    n = name,
+                    v = info,
+                )
+            }
+            break;
+        }
+    }
+    Ok(())
+}
+
+fn var_os(key: &'static str) -> Result<OsString, Error> {
+    std::env::var_os(key).ok_or(Error::Var(key))
+}
+
+fn cargo_tree(cargo: &OsStr, root: &OsStr, package: &str) -> Result<CargoTreeOutput, Error> {
+    let output = Command::new(cargo)
+        .args([
+            "tree",
+            "--locked",
+            "--edges=normal",
+            "--depth=1",
+            "--charset=ascii",
+            "--all-features",
+            "--package",
+            package,
+        ])
+        .current_dir(root)
         .stdin(Stdio::null())
         .stdout(Stdio::piped())
         .stderr(Stdio::inherit())
@@ -22,89 +70,45 @@ fn main() -> Result<(), Error> {
         return Err(Error::Status(output.status));
     }
 
-    let metadata: Metadata<'_> = from_slice(&output.stdout).map_err(Error::FromSlice)?;
-    let packages = metadata
-        .packages
-        .iter()
-        .map(|p| (&*p.name, p))
-        .collect::<HashMap<_, _>>();
-    for p in &metadata.packages {
-        if p.source.is_some() {
-            continue;
-        }
-        let Some(name_suffix) = p.name.strip_prefix("tmpl-") else {
-            continue;
-        };
-        for dep in &p.dependencies {
-            let (dep_prefix, _) = dep.name.split_once('_').unwrap_or((&dep.name, ""));
-            if dep_prefix != name_suffix {
-                continue;
-            }
-            let Some(dep) = packages.get(&*dep.name) else {
-                break;
-            };
-            let Some(source) = dep.source.as_deref() else {
-                break;
-            };
-            match source
-                .strip_prefix("git+")
-                .and_then(|s| s.rsplit_once('#')?.1.get(..8))
-            {
-                Some(shorthash) => println!(
-                    r#"cargo::rustc-env=VERSION_{n}={n} v{v} (git-{h})"#,
-                    n = name_suffix,
-                    v = dep.version,
-                    h = shorthash,
-                ),
-                None => println!(
-                    r#"cargo::rustc-env=VERSION_{n}={n} v{v}"#,
-                    n = name_suffix,
-                    v = dep.version,
-                ),
-            }
-        }
-    }
-    Ok(())
+    Ok(CargoTreeOutput::new(
+        String::from_utf8(output.stdout).map_err(|_| Error::Utf8)?,
+        |s| {
+            s.lines()
+                .filter_map(|l| (l.get(1..4)? == "-- ").then(|| l.get(4..)?.split_once(' '))?)
+                .collect()
+        },
+    ))
 }
+
+self_cell::self_cell! {
+    struct CargoTreeOutput {
+        owner: String,
+        #[covariant]
+        dependent: CargoTreeOutputLines,
+    }
+}
+
+impl<'a> IntoIterator for &'a CargoTreeOutput {
+    type Item = <&'a CargoTreeOutputLines<'a> as IntoIterator>::Item;
+    type IntoIter = <&'a CargoTreeOutputLines<'a> as IntoIterator>::IntoIter;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.borrow_dependent().iter()
+    }
+}
+
+type CargoTreeOutputLines<'a> = Vec<(&'a str, &'a str)>;
 
 #[derive(thiserror::Error, pretty_error_debug::Debug)]
 enum Error {
     #[error("environment variable {:?} not found", 1)]
     Var(&'static str),
-    #[error("could not spawn `cargo metadata`")]
+    #[error("could not spawn `cargo`")]
     Spawn(#[source] std::io::Error),
-    #[error("could not wait for `cargo metadata`")]
+    #[error("could not wait for `cargo`")]
     Wait(#[source] std::io::Error),
-    #[error("subprocess `cargo metadata` exited with an error: {}", .0)]
+    #[error("`cargo` exited with an error: {}", .0)]
     Status(std::process::ExitStatus),
-    #[error("could not parse `cargo metadata`'s output")]
-    FromSlice(#[source] serde_json::Error),
-}
-
-fn var_os(key: &'static str) -> Result<OsString, Error> {
-    std::env::var_os(key).ok_or(Error::Var(key))
-}
-
-#[derive(Debug, Deserialize)]
-struct Metadata<'a> {
-    #[serde(borrow)]
-    packages: Vec<Package<'a>>,
-}
-
-#[derive(Debug, Deserialize)]
-struct Package<'a> {
-    #[serde(borrow)]
-    name: Cow<'a, str>,
-    #[serde(borrow)]
-    version: Cow<'a, str>,
-    #[serde(borrow)]
-    source: Option<Cow<'a, str>>,
-    #[serde(borrow)]
-    dependencies: Vec<Dependency<'a>>,
-}
-
-#[derive(Debug, Deserialize)]
-struct Dependency<'a> {
-    #[serde(borrow)]
-    name: Cow<'a, str>,
+    #[error("`cargo` returned non-UTF-8 data")]
+    Utf8,
 }
