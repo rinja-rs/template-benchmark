@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from glob import glob
 from io import StringIO
 from json import load
@@ -134,8 +135,11 @@ def main(root_dir: Path):
     print("<tfoot>", file=f)
     print("<tr>", file=f)
     print(
-        '<td colspan="2" style="background-color:transparent; border:none"></td>',
+        '<td colspan="2" style="text-align: center"><small>',
+        datetime.now(timezone.utc).isoformat().replace("T", " ").split(".")[0],
+        "</small></td>",
         file=f,
+        sep="",
     )
     print(
         '<td colspan="2" style="text-align: center"><small><em>median; lower is better</em></small></td>',
