@@ -46,25 +46,25 @@ small {
 """
 
 
-@dataclass
+@dataclass(frozen=True)
 class Entry:
     point: float
     stderr: float
 
 
-def null(i):
-    if i >= 10:
-        return f"{i:.1f}"
-    else:
-        return f"&#x2007;{i:.1f}"
+@dataclass(frozen=True)
+class Crate:
+    function_id: str
+    name: str
+    version: str
 
 
 def main(root_dir: Path):
-    groups = {
+    entries = {
         "big_table": {},
         "teams": {},
     }
-    names = {}
+    crates = set()
     units = {
         "big_table": ("µs", 1000),
         "teams": ("ns", 1),
@@ -77,16 +77,25 @@ def main(root_dir: Path):
             estimates = load(f)
 
         group = benchmark["group_id"].split()[0]
-        name, version = benchmark["function_id"].split(maxsplit=1)
+        function_id = benchmark["function_id"]
+        name, version = function_id.split(maxsplit=1)
         point = estimates["median"]["point_estimate"] / units[group][1]
         stderr = estimates["median"]["standard_error"] / units[group][1]
 
-        names.setdefault(name, [version, 0])[1] += point
-        groups[group][name] = Entry(point, stderr)
+        crates.add(Crate(function_id, name, version))
+        entries[group][function_id] = Entry(point, stderr)
 
-    names = sorted(
-        ((name, version, point) for name, [version, point] in names.items()),
-        key=lambda entry: entry[2],
+    spread = {}
+    for key, values in entries.items():
+        start = min(entry.point - entry.stderr for entry in values.values())
+        size = max(entry.point + entry.stderr for entry in values.values()) - start
+        spread[key] = (start, size)
+    crates = sorted(
+        crates,
+        key=lambda crate: sum(
+            (entries[key][crate.function_id].point - spread[key][0]) / spread[key][1]
+            for key in entries
+        ),
     )
 
     f = StringIO()
@@ -100,36 +109,22 @@ def main(root_dir: Path):
     print("<table>", file=f)
     print("<thead>", file=f)
     print("<tr>", file=f)
-    print("<th>crate</th>", file=f)
-    print("<th>version</th>", file=f)
-    print('<th>big table <abbr title="microseconds = 10^-6 s">(µs)</abbr></th>', file=f)
-    print('<th>teams <abbr title="nanoseconds = 10^-9 s">(ns)<abbr></th>', file=f)
+    print("<th>Crate</th>", file=f)
+    print("<th>Version</th>", file=f)
+    print('<th>Big Table <abbr title="microseconds = 10^-6 s">(µs)</abbr></th>', file=f)
+    print('<th>Teams <abbr title="nanoseconds = 10^-9 s">(ns)<abbr></th>', file=f)
     print("</thead>", file=f)
     print("<tbody>", file=f)
-    for name, version, _ in names:
-        big_table = groups["big_table"][name]
-        teams = groups["teams"][name]
+    for crate in crates:
         print("<tr>", file=f)
-        print("<td>", name, "</td>", file=f)
-        print("<td>", version, "</td>", file=f)
-        print(
-            "<td>",
-            f"{big_table.point:,.1f}",
-            " <small>(± ",
-            null(big_table.stderr),
-            ")</small></td>",
-            sep="",
-            file=f,
-        )
-        print(
-            "<td>",
-            f"{teams.point:,.1f}",
-            " <small>(± ",
-            null(teams.stderr),
-            ")</small></td>",
-            sep="",
-            file=f,
-        )
+        print("<td>", crate.name, "</td>", file=f)
+        print("<td>", crate.version, "</td>", file=f)
+        for values in entries.values():
+            value = values[crate.function_id]
+            print(
+                f"<td>{value.point:,.1f} <small>(± {value.stderr:,.1f})</small></td>",
+                file=f,
+            )
         print("</tr>", file=f)
     print("</tbody>", file=f)
     print("<tfoot>", file=f)
