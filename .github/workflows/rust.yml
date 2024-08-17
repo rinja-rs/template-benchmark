@@ -135,8 +135,12 @@ jobs:
       - name: Remove any stale results
         run: rm -rf target/criterion
 
+      - name: Build benchmarks
+        run: cargo build --release --bench template-benchmark
+
       - name: Run benchmarks
-        run: cargo bench --bench template-benchmark
+        # Pin to one CPU, skipping the first core, to hopefully get fewer outliers.
+        run: taskset --cpu-list "$(( $RANDOM  % ($(nproc) - 2) + 2 ))" cargo bench --bench template-benchmark
 
       - name: Fixup paths
         run: sed -e 's,href="../,href=",' < target/criterion/report/index.html > target/criterion/index.html
