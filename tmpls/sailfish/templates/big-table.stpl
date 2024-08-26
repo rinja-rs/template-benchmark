@@ -1,5 +1,5 @@
 <table>
-    <% for row in &input.table { %>
+    <% for row in &self.input.table { %>
     <tr>
         <% for col in row { %>
         <td><%= col %></td>

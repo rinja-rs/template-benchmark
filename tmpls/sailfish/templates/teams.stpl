@@ -1,11 +1,11 @@
 <html>
   <head>
-    <title><%= input.year %></title>
+    <title><%= self.input.year %></title>
   </head>
   <body>
-    <h1>CSL <%= input.year %></h1>
+    <h1>CSL <%= self.input.year %></h1>
     <ul>
-    <% for (idx, team) in input.teams.iter().enumerate() { %>
+    <% for (idx, team) in self.input.teams.iter().enumerate() { %>
       <li class="<% if idx == 0 { %>champion<% } %>">
       <b><%= team.name %></b>: <%= team.score %>
       </li>
