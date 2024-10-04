@@ -1,5 +1,5 @@
-use tinytemplate::error::Error;
 use tinytemplate::TinyTemplate;
+use tinytemplate::error::Error;
 use tmpls::{BigTable, Teams};
 
 pub struct Benchmark {

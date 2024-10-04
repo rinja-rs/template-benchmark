@@ -1,4 +1,4 @@
-use horrorshow::{html, Error, Template};
+use horrorshow::{Error, Template, html};
 use tmpls::{BigTable, Teams};
 
 #[derive(Debug, Default)]

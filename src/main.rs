@@ -1,7 +1,7 @@
 use std::borrow::Cow;
 use std::env::args;
 use std::fmt;
-use std::str::{from_utf8, Utf8Error};
+use std::str::{Utf8Error, from_utf8};
 
 use tmpls::{Benchmark, BigTable, Output, Teams};
 
