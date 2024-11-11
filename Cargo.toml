@@ -63,12 +63,12 @@ tinytemplate = { version = "*", optional = true, path = "tmpls/tinytemplate", pa
 ahash = { version = "0.8.11", features = ["no-rng"] }
 criterion = { version = "0.5.1", features = ["html_reports"] }
 pretty-error-debug = "0.3.0"
-thiserror = "1.0.63"
+thiserror = "2.0.3"
 
 [build-dependencies]
 pretty-error-debug = "0.3.0"
 self_cell = "1.0.4"
-thiserror = "1.0.63"
+thiserror = "2.0.3"
 
 [[bench]]
 name = "template-benchmark"
