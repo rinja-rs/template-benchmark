@@ -12,6 +12,7 @@ members = [
     "tmpls/sailfish",
     "tmpls/tera",
     "tmpls/tinytemplate",
+    "tmpls/upon",
 ]
 resolver = "2"
 
@@ -26,7 +27,7 @@ license = "Apache-2.0"
 default = ["compiled", "interpreted"]
 
 compiled = ["askama", "horrorshow", "markup", "maud", "rinja", "rinja_git", "ructe", "sailfish"]
-interpreted = ["handlebars", "minijinja", "tera", "tinytemplate"]
+interpreted = ["handlebars", "minijinja", "tera", "tinytemplate", "upon"]
 
 askama = ["dep:askama", "_contains_compiled"]
 handlebars = ["dep:handlebars", "_contains_interpreted"]
@@ -40,6 +41,7 @@ ructe = ["dep:ructe", "_contains_compiled"]
 sailfish = ["dep:sailfish", "_contains_compiled"]
 tera = ["dep:tera", "_contains_interpreted"]
 tinytemplate = ["dep:tinytemplate", "_contains_interpreted"]
+upon = ["dep:upon", "_contains_interpreted"]
 
 _contains_compiled = []
 _contains_interpreted = []
@@ -59,6 +61,7 @@ ructe = { version = "*", optional = true, path = "tmpls/ructe", package = "tmpl-
 sailfish = { version = "*", optional = true, path = "tmpls/sailfish", package = "tmpl-sailfish" }
 tera = { version = "*", optional = true, path = "tmpls/tera", package = "tmpl-tera" }
 tinytemplate = { version = "*", optional = true, path = "tmpls/tinytemplate", package = "tmpl-tinytemplate" }
+upon = { version = "*", optional = true, path = "tmpls/upon", package = "tmpl-upon" }
 
 ahash = { version = "0.8.11", features = ["no-rng"] }
 criterion = { version = "0.5.1", features = ["html_reports"] }

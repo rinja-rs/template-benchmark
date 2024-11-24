@@ -94,6 +94,8 @@ const TMPLS: &[(&str, fn(Case) -> Result<(), Error>)] = &[
     ("tera", tmpl::<tera::Benchmark>),
     #[cfg(feature = "tinytemplate")]
     ("tinytemplate", tmpl::<tinytemplate::Benchmark>),
+    #[cfg(feature = "upon")]
+    ("upon", tmpl::<upon::Benchmark>),
 ];
 
 struct Tmpls(usize);

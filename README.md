@@ -26,6 +26,7 @@ All of them are well maintained, mature and perform HTML escaping automatically.
 | [sailfish]     | [![][docs-img-sailfish]][docs-sailfish]         | [![][img-repo]][repo-sailfish]     | pre-compiled | [![][dl-sailfish]][sailfish]         | [![][stars-sailfish]][repo-sailfish]         | [![][contr-sailfish]][repo-sailfish]         | [![][act-sailfish]][repo-sailfish]         |
 | [tera]         | [![][docs-img-tera]][docs-tera]                 | [![][img-repo]][repo-tera]         | interpreted  | [![][dl-tera]][tera]                 | [![][stars-tera]][repo-tera]                 | [![][contr-tera]][repo-tera]                 | [![][act-tera]][repo-tera]                 |
 | [tinytemplate] | [![][docs-img-tinytemplate]][docs-tinytemplate] | [![][img-repo]][repo-tinytemplate] | interpreted  | [![][dl-tinytemplate]][tinytemplate] | [![][stars-tinytemplate]][repo-tinytemplate] | [![][contr-tinytemplate]][repo-tinytemplate] | [![][act-tinytemplate]][repo-tinytemplate] |
+| [upon] | [![][docs-img-upon]][docs-upon] | [![][img-repo]][repo-upon] | interpreted  | [![][dl-upon]][upon] | [![][stars-upon]][repo-upon] | [![][contr-upon]][repo-upon] | [![][act-upon]][repo-upon] |
 
 Please see also [*Rust web framework comparison*].
 
@@ -62,6 +63,7 @@ Run `./generate-table.py` to generate the table you see above.
 [sailfish]: <https://crates.io/crates/sailfish/>
 [tera]: <https://crates.io/crates/tera/>
 [tinytemplate]: <https://crates.io/crates/tinytemplate/>
+[upon]: <https://crates.io/crates/upon/>
 
 [docs-askama]: <https://docs.rs/askama/latest/askama>
 [docs-handlebars]: <https://docs.rs/handlebars/latest/handlebars>
@@ -74,6 +76,7 @@ Run `./generate-table.py` to generate the table you see above.
 [docs-sailfish]: <https://docs.rs/sailfish/latest/sailfish>
 [docs-tera]: <https://docs.rs/tera/latest/tera>
 [docs-tinytemplate]: <https://docs.rs/tinytemplate/latest/tinytemplate>
+[docs-upon]: <https://docs.rs/upon/latest/upon>
 
 [docs-img-askama]: <https://img.shields.io/docsrs/askama?label=&style=flat-square>
 [docs-img-handlebars]: <https://img.shields.io/docsrs/handlebars?label=&style=flat-square>
@@ -86,6 +89,7 @@ Run `./generate-table.py` to generate the table you see above.
 [docs-img-sailfish]: <https://img.shields.io/docsrs/sailfish?label=&style=flat-square>
 [docs-img-tera]: <https://img.shields.io/docsrs/tera?label=&style=flat-square>
 [docs-img-tinytemplate]: <https://img.shields.io/docsrs/tinytemplate?label=&style=flat-square>
+[docs-img-upon]: <https://img.shields.io/docsrs/upon?label=&style=flat-square>
 
 [dl-askama]: <https://img.shields.io/crates/dr/askama?label=&color=f8f8f8&style=flat-square>
 [dl-handlebars]: <https://img.shields.io/crates/dr/handlebars?label=&color=f8f8f8&style=flat-square>
@@ -98,6 +102,7 @@ Run `./generate-table.py` to generate the table you see above.
 [dl-sailfish]: <https://img.shields.io/crates/dr/sailfish?label=&color=f8f8f8&style=flat-square>
 [dl-tera]: <https://img.shields.io/crates/dr/tera?label=&color=f8f8f8&style=flat-square>
 [dl-tinytemplate]: <https://img.shields.io/crates/dr/tinytemplate?label=&color=f8f8f8&style=flat-square>
+[dl-upon]: <https://img.shields.io/crates/dr/upon?label=&color=f8f8f8&style=flat-square>
 
 [stars-askama]: <https://img.shields.io/github/stars/djc/askama?label=&color=f8f8f8&style=flat-square>
 [stars-handlebars]: <https://img.shields.io/github/stars/sunng87/handlebars-rust?label=&color=f8f8f8&style=flat-square>
@@ -110,6 +115,7 @@ Run `./generate-table.py` to generate the table you see above.
 [stars-sailfish]: <https://img.shields.io/github/stars/rust-sailfish/sailfish?label=&color=f8f8f8&style=flat-square>
 [stars-tera]: <https://img.shields.io/github/stars/Keats/tera?label=&color=f8f8f8&style=flat-square>
 [stars-tinytemplate]: <https://img.shields.io/github/stars/bheisler/TinyTemplate?label=&color=f8f8f8&style=flat-square>
+[stars-upon]: <https://img.shields.io/github/stars/rossmacarthur/upon?label=&color=f8f8f8&style=flat-square>
 
 [contr-askama]: <https://img.shields.io/github/contributors/djc/askama?label=&color=f8f8f8&style=flat-square>
 [contr-handlebars]: <https://img.shields.io/github/contributors/sunng87/handlebars-rust?label=&color=f8f8f8&style=flat-square>
@@ -122,6 +128,7 @@ Run `./generate-table.py` to generate the table you see above.
 [contr-sailfish]: <https://img.shields.io/github/contributors/rust-sailfish/sailfish?label=&color=f8f8f8&style=flat-square>
 [contr-tera]: <https://img.shields.io/github/contributors/Keats/tera?label=&color=f8f8f8&style=flat-square>
 [contr-tinytemplate]: <https://img.shields.io/github/contributors/bheisler/TinyTemplate?label=&color=f8f8f8&style=flat-square>
+[contr-upon]: <https://img.shields.io/github/contributors/rossmacarthur/upon?label=&color=f8f8f8&style=flat-square>
 
 [act-askama]: <https://img.shields.io/github/commit-activity/y/djc/askama?label=&color=f8f8f8&style=flat-square>
 [act-handlebars]: <https://img.shields.io/github/commit-activity/y/sunng87/handlebars-rust?label=&color=f8f8f8&style=flat-square>
@@ -134,6 +141,7 @@ Run `./generate-table.py` to generate the table you see above.
 [act-sailfish]: <https://img.shields.io/github/commit-activity/y/rust-sailfish/sailfish?label=&color=f8f8f8&style=flat-square>
 [act-tera]: <https://img.shields.io/github/commit-activity/y/Keats/tera?label=&color=f8f8f8&style=flat-square>
 [act-tinytemplate]: <https://img.shields.io/github/commit-activity/y/bheisler/TinyTemplate?label=&color=f8f8f8&style=flat-square>
+[act-upon]: <https://img.shields.io/github/commit-activity/y/rossmacarthur/upon?label=&color=f8f8f8&style=flat-square>
 
 [repo-askama]: <https://github.com/djc/askama>
 [repo-handlebars]: <https://github.com/sunng87/handlebars-rust>
@@ -146,3 +154,4 @@ Run `./generate-table.py` to generate the table you see above.
 [repo-sailfish]: <https://github.com/rust-sailfish/sailfish>
 [repo-tera]: <https://github.com/Keats/tera>
 [repo-tinytemplate]: <https://github.com/bheisler/TinyTemplate>
+[repo-upon]: <https://github.com/rossmacarthur/upon>
