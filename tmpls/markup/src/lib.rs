@@ -4,6 +4,7 @@ use tmpls::{BigTable, Teams};
 #[derive(Debug, Default)]
 pub struct Benchmark;
 
+#[allow(clippy::needless_lifetimes)] // false-positive
 impl tmpls::Benchmark for Benchmark {
     type Output = String;
     type Error = std::fmt::Error;

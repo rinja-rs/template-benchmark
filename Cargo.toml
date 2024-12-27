@@ -60,15 +60,15 @@ sailfish = { version = "*", optional = true, path = "tmpls/sailfish", package = 
 tera = { version = "*", optional = true, path = "tmpls/tera", package = "tmpl-tera" }
 tinytemplate = { version = "*", optional = true, path = "tmpls/tinytemplate", package = "tmpl-tinytemplate" }
 
-ahash = { version = "0.8.11", features = ["no-rng"] }
-criterion = { version = "0.5.1", features = ["html_reports"] }
-pretty-error-debug = "0.3.0"
-thiserror = "2.0.3"
+ahash = { version = "0.8", features = ["no-rng"] }
+criterion = { version = "0.5", features = ["html_reports"] }
+pretty-error-debug = "0.3"
+thiserror = "2"
 
 [build-dependencies]
-pretty-error-debug = "0.3.0"
-self_cell = "1.0.4"
-thiserror = "2.0.3"
+pretty-error-debug = "0.3"
+self_cell = "1"
+thiserror = "2"
 
 [[bench]]
 name = "template-benchmark"

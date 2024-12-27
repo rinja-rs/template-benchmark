@@ -8,4 +8,4 @@ license = "Apache-2.0"
 [dependencies]
 tmpls = { version = "*", path = ".." }
 
-handlebars = "6.0.0"
+handlebars = "6"

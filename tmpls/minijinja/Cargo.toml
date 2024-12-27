@@ -8,4 +8,4 @@ license = "Apache-2.0"
 [dependencies]
 tmpls = { version = "*", path = ".." }
 
-minijinja = { version = "2.1.2", default-features = false, features = ["serde", "speedups"] }
+minijinja = { version = "2", default-features = false, features = ["serde", "speedups"] }

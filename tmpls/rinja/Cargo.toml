@@ -8,4 +8,4 @@ license = "Apache-2.0"
 [dependencies]
 tmpls = { version = "*", path = ".." }
 
-rinja = "0.3.0"
+rinja = "0.3"

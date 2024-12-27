@@ -8,5 +8,4 @@ license = "Apache-2.0"
 [dependencies]
 tmpls = { version = "*", path = ".." }
 
-maud = "0.26.0"
-
+maud = "0.26"

@@ -8,4 +8,4 @@ license = "Apache-2.0"
 [dependencies]
 tmpls = { version = "*", path = ".." }
 
-markup = { version = "0.15.0", features = ["itoa"] }
+markup = { version = "0.15", features = ["itoa"] }

@@ -125,7 +125,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y gnuplot inkscape scour wkhtmltopdf xvfb
+          sudo apt-get install -y coreutils gnuplot inkscape retry scour wkhtmltopdf xvfb
 
       - name: Install rust
         uses: dtolnay/rust-toolchain@master
@@ -142,13 +142,13 @@ jobs:
 
       - name: Run benchmarks
         # Pin to one CPU, skipping the first core, to hopefully get fewer outliers.
-        run: taskset --cpu-list "$(( $RANDOM  % ($(nproc) - 2) + 2 ))" cargo bench --bench template-benchmark
+        run: taskset --cpu-list "$(( $RANDOM  % ($(nproc) - 2) + 2 ))" cargo bench --bench template-benchmark -- --nocapture
 
       - name: Fixup paths
         run: sed -e 's,href="../,href=",' < target/criterion/report/index.html > target/criterion/index.html
 
       - name: Generate table
-        run: ./generate-table.py
+        run: timeout 300 retry timeout 30 ./generate-table.py
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

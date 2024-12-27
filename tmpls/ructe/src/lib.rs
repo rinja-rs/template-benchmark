@@ -1,3 +1,5 @@
+#![allow(clippy::needless_lifetimes)] // false-positive
+
 include!(concat!(env!("OUT_DIR"), "/templates.rs"));
 
 use tmpls::{BigTable, Teams};
