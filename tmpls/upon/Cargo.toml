@@ -1,0 +1,11 @@
+[package]
+name = "tmpl-upon"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license = "Apache-2.0"
+
+[dependencies]
+tmpls = { version = "*", path = ".." }
+
+upon = { version = "0.8.1", default-features = false, features = [ "filters", "serde", "unicode" ] }
