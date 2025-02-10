@@ -8,7 +8,7 @@ license = "Apache-2.0"
 [dependencies]
 tmpls = { version = "*", path = ".." }
 
-ructe = "0.17"
+ructe = "0.18"
 
 [build-dependencies]
-ructe = "0.17"
+ructe = "0.18"
